@@ -51,6 +51,11 @@
 #define LUA_USE_WINDOWS  /* enable goodies for regular Windows */
 #endif
 
+#if defined(LUA_USE_WINDOWS) && ( defined(__MINGW32__) || defined(__MINGW64__) )
+#define stdin  (&__iob_func()[0])
+#define stdout (&__iob_func()[1])
+#define stderr (&__iob_func()[2])
+#endif
 
 #if defined(LUA_USE_WINDOWS)
 #define LUA_DL_DLL	/* enable support for DLL */
