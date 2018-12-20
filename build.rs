@@ -9,6 +9,7 @@ fn main() {
 
         let target_os = env::var("CARGO_CFG_TARGET_OS");
         let target_family = env::var("CARGO_CFG_TARGET_FAMILY");
+        let target_env = env::var("CARGO_CFG_TARGET_ENV");
 
         let mut config = cc::Build::new();
 
@@ -20,6 +21,9 @@ fn main() {
             config.define("LUA_USE_POSIX", None);
         } else if target_family == Ok("windows".to_string()) {
             config.define("LUA_USE_WINDOWS", None);
+        } else if target_family == Ok("windows".to_string()) && target_env == Ok("gnu".to_string()) {
+            config.define("LUA_USE_WINDOWS", None);
+            config.flag("-U_MSVC");
         }
 
         if cfg!(debug_assertions) {
