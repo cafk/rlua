@@ -21,9 +21,9 @@ fn main() {
             config.define("LUA_USE_POSIX", None);
         } else if target_family == Ok("windows".to_string()) {
             config.define("LUA_USE_WINDOWS", None);
-        } else if target_family == Ok("windows".to_string()) && target_env == Ok("gnu".to_string()) {
-            config.define("LUA_USE_WINDOWS", None);
-            config.flag("-U_MSVC");
+            if target_env == Ok("gnu".to_string()) {
+                config.flag("-U_MSC_VER");
+            }
         }
 
         if cfg!(debug_assertions) {
